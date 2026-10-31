@@ -1,0 +1,147 @@
+/* ==========================================================================
+   Fadeel Sher Khan — personal site stylesheet
+   Plain CSS, light mode only. Change colors in :root below.
+   ========================================================================== */
+
+/* Layout: one centered ~800px column; image-left / text-right rows that stack on phones. */
+:root {
+  --text: #222;          /* body text */
+  --muted: #555;         /* subtitles, notes, abstracts */
+  --bg: #fff;            /* page background */
+  --link: #1772d0;       /* muted blue links */
+  --link-hover: #f09228; /* hover/focus orange */
+  --rule: #e6e6e6;       /* row dividers */
+  --thumb-bg: #fff;
+
+  /* status labels on publications */
+  --tag-journal-bg: #e8f0fb;  --tag-journal-fg: #1a4f8f;
+  --tag-conf-bg: #e9f5ec;     --tag-conf-fg: #1f6b35;
+  --tag-preprint-bg: #f0f1f3; --tag-preprint-fg: #4a4f57;
+  --tag-review-bg: #fdf3e1;   --tag-review-fg: #8a5a0b;
+
+  --font: 'Lato', Verdana, Helvetica, sans-serif;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a { color: var(--link); text-decoration: none; }
+a:hover, a:focus { color: var(--link-hover); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; border-radius: 2px; }
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-block: 24px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Header: name, title, bio, links, photo ---------- */
+.intro { display: flex; gap: 4%; align-items: center; }
+.intro-text { flex: 1 1 60%; min-width: 0; }
+.intro-text p { margin: 0 0 12px; }
+.intro-photo { flex: 0 0 34%; }
+.intro-photo img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+h1 { font-size: 32px; font-weight: 400; text-align: center; margin: 8px 0 4px; text-wrap: balance; }
+.intro-text .subtitle { text-align: center; color: var(--muted); margin: 0 0 16px; }
+.intro-text .contact { text-align: center; margin: 4px 0 0; }
+
+/* ---------- Section headings ---------- */
+h2 { font-size: 22px; font-weight: 400; margin: 40px 0 4px; text-wrap: balance; }
+h3 { font-size: 16px; font-weight: 700; margin: 28px 0 0; color: var(--muted); }
+.section-desc { margin: 0 0 8px; color: var(--muted); }
+
+/* ---------- Rows (research highlights + publications) ---------- */
+.pub {
+  display: flex;
+  gap: 4%;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.pub:last-child { border-bottom: 0; }
+.pub-img { flex: 0 0 180px; max-width: 180px; }
+.pub-img img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  background: var(--thumb-bg);
+  border-radius: 4px;
+}
+.pub-body { flex: 1 1 auto; min-width: 0; }
+.pub-title { font-weight: 700; font-size: 16px; }
+.pub-meta, .pub-links { margin-top: 2px; }
+.pub-authors strong { font-weight: 700; }
+.equal-note { font-size: 13px; color: var(--muted); }
+.impact-desc { margin: 6px 0 4px; }
+.venue-note { color: var(--muted); }
+
+/* "pdf / arXiv / publisher / abstract" separators */
+.pub-links > * + *::before { content: ' / '; color: var(--text); }
+
+/* Abstract: hidden until its toggle is clicked */
+.abstract { display: none; margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+.abstract.open { display: block; }
+.abstract-toggle {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--link);
+  cursor: pointer;
+}
+.abstract-toggle:hover { color: var(--link-hover); }
+
+/* Small status label above each publication title */
+.tag {
+  display: inline-block;
+  margin-bottom: 3px;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+.tag-journal  { background: var(--tag-journal-bg);  color: var(--tag-journal-fg); }
+.tag-conf     { background: var(--tag-conf-bg);     color: var(--tag-conf-fg); }
+.tag-preprint { background: var(--tag-preprint-bg); color: var(--tag-preprint-fg); }
+.tag-review   { background: var(--tag-review-bg);   color: var(--tag-review-fg); }
+
+/* ---------- Simple lists (patents, talks, service, other projects) ---------- */
+.plain-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 12px; }
+.plain-list li { min-width: 0; }
+.plain-list .item-title { font-weight: 700; }
+.plain-list .item-meta { color: var(--muted); }
+
+footer { margin-top: 48px; text-align: center; font-size: 13px; color: var(--muted); }
+
+/* ---------- Phones: stack photo above text, thumbnails above text ---------- */
+@media (max-width: 600px) {
+  .intro { flex-direction: column-reverse; gap: 16px; }
+  .intro-photo { width: 55%; flex-basis: auto; }
+  .pub { flex-direction: column; align-items: stretch; gap: 10px; }
+  .pub-img { flex-basis: auto; max-width: 100%; }
+  .pub-img img { width: auto; height: auto; max-height: 220px; margin: 0 auto; }
+  h1 { font-size: 28px; }
+}
